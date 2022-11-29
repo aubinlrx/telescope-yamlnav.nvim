@@ -29,7 +29,7 @@ use { 'aubinlrx/telescope-yamlnav.nvim', branch = 'main' }
 require('telescope').setup({
   extensions = {
     yamlnav = {
-      prefix = "en"
+      remove_prefix = true
     }
   }
 })
@@ -37,4 +37,7 @@ require('telescope').setup({
 -- To get yamlnav loaded and working with telescope, you need to call
 -- load_extension, somewhere after setup function:
 require('telescope').load_extension('yamlnav')
+
+-- To be able to copy path under the current cursor a user function is available
+vim.keymap.set("n", "<leader>yy", "<cmd>YamlNavCopy<cr>")
 ```
