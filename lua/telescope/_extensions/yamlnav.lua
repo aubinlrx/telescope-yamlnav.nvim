@@ -19,12 +19,10 @@ if 1 ~= vim.fn.executable("yaml-path") then
 	return
 end
 
-local yaml_nav = {}
+local yaml_nav_command = require("yamlnav").yaml_path_list_command()
 
-local yaml_nav_command = { "yaml-path", "list", "--line" }
-
-yaml_nav.list_paths = function(opts)
-	opts = opts or {}
+local yaml_list_paths = function(opts)
+	opts = opts or { prefix = "en" }
 
 	if vim.bo.filetype ~= "yaml" then
 		utils.notify("aubinlrx.yaml_path", {
@@ -59,13 +57,13 @@ yaml_nav.list_paths = function(opts)
 				filepath = filepath,
 			}
 
-			if value.keys == "en" then
+			if value.keys == opts.prefix then
 				return nil
 			end
 
 			return {
 				value = value,
-				display = string.gsub(value.keys, "^en.?", ""),
+				display = string.gsub(value.keys, "^" .. opts.prefix .. ".?", ""),
 				ordinal = value.keys,
 			}
 		end,
@@ -89,7 +87,7 @@ yaml_nav.list_paths = function(opts)
 end
 
 return telescope.register_extension({
-  exports = {
-    yamlnav = yaml_nav.list_paths
-  }
+	exports = {
+		yamlnav = yaml_list_paths,
+	},
 })
