@@ -3,12 +3,12 @@ if not has_telescope then
 	error("This plugin requires telescope.nvim (https://github.com/nvim-telescope/telescope.nvim)")
 end
 
-local pickers = telescope.pickers
-local finders = telescope.finders
-local conf = telescope.config.values
-local actions = telescope.actions
-local action_state = telescope.actions.action_state
-local utils = telescope.utils
+local pickers = require("telescope.pickers")
+local finders = require("telescope.finders")
+local conf = require("telescope.config").values
+local actions = require("telescope.actions")
+local action_state = require("telescope.actions.state")
+local utils = require("telescope.utils")
 
 -- Check if yaml-path as been installed
 if 1 ~= vim.fn.executable("yaml-path") then
@@ -88,7 +88,7 @@ yaml_nav.list_paths = function(opts)
 		:find()
 end
 
-return require("telescope").register_extension({
+return telescope.register_extension({
   exports = {
     yamlnav = yaml_nav.list_paths
   }
