@@ -22,8 +22,7 @@ end
 local yaml_nav_command = require("yamlnav").yaml_path_list_command()
 
 local yaml_list_paths = function(opts)
-	opts = opts or { prefix = "en" }
-
+	opts = opts or {}
 	if vim.bo.filetype ~= "yaml" then
 		utils.notify("aubinlrx.yaml_path", {
 			msg = "Only works on .yml file",
@@ -52,19 +51,15 @@ local yaml_list_paths = function(opts)
 			local file = split(entry, " #")
 
 			local value = {
-				keys = file[1],
+				path = file[1],
 				lnum = file[2],
 				filepath = filepath,
 			}
 
-			if value.keys == opts.prefix then
-				return nil
-			end
-
 			return {
 				value = value,
-				display = string.gsub(value.keys, "^" .. opts.prefix .. ".?", ""),
-				ordinal = value.keys,
+				display = value.path,
+				ordinal = value.path,
 			}
 		end,
 	})
