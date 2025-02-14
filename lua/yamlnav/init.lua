@@ -16,7 +16,7 @@ M.copy_path = function()
 	local line = vim.api.nvim_win_get_cursor(0)[1]
 	local pos = vim.api.nvim_get_current_line():match("^%s*"):len() + 1
 
-	local command = { "yaml-path", "get", filepath, "-c", pos, "-l", line }
+	local command = { "yaml-path", "get", filepath, "-c", pos, "-l", line, "-r" }
 	local path = vim.fn.systemlist(command)[1]
 
 	if path == nil or vim.startswith(path, "Error") then
